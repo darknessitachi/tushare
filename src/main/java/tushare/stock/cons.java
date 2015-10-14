@@ -1,12 +1,12 @@
 package tushare.stock;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class cons {
+	
 	public static final String VERSION = "0.3.6";
 
 	public static List<String> K_LABELS = Arrays.asList("D", "W", "M");
