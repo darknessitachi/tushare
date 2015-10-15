@@ -121,7 +121,10 @@ public static String DAY_PRICE_MIN_URL = "%sapi.finance.%s/akmin?scode=%s&type=%
 //SHIBOR_TYPE ={"Shibor": "Shibor数据", "Quote": "报价数据", "Tendency": "Shibor均值数据",
 //              "LPR": "LPR数据", "LPR_Tendency": "LPR均值数据"}
 //SHIBOR_DATA_URL = "%s%s/shibor/web/html/%s?nameNew=Historical_%s_Data_%s.xls&downLoadPath=data&nameOld=%s%s.xls&shiborSrc=http://www.shibor.org/shibor/"
-//ALL_STOCK_BASICS_FILE = "%s%s/static/all.csv"%(P_TYPE["http"], DOMAINS["oss"])
+public static String ALL_STOCK_BASICS_FILE = String.format("%s%s/static/all.csv", P_TYPE.get("http"), DOMAINS.get("oss"));
+public static void main(String[] args) {
+	System.out.println(ALL_STOCK_BASICS_FILE);
+}
 //SINA_CONCEPTS_INDEX_URL = "%smoney.%s/q/view/%s?param=class"
 //SINA_INDUSTRY_INDEX_URL = "%s%s/q/view/%s"
 //SINA_DATA_DETAIL_URL = "%s%s/quotes_service/api/%s/Market_Center.getHQNodeData?page=1&num=400&sort=symbol&asc=1&node=%s&symbol=&_s_r_a=page"
