@@ -32,23 +32,95 @@ public class trading {
 		trading trading = new trading();
 		trading.get_hist_data("600789","2015-10-08","2015-10-12","D",3);
 	}
+	
+	/**
+	 * 历史行情
+	 * 
+	 * 获取个股历史交易数据（包括均线数据），可以通过参数设置获取日k线、周k线、月k线，以及5分钟、15分钟、30分钟和60分钟k线数据。
+	 * 本接口只能获取近3年的日线数据，适合搭配均线数据进行选股和分析，如果需要全部历史数据，请调用下一个接口get_h_data()。
+	 * 
+	 * 调用方法：
+	 * 	ts.get_hist_data('600848') #一次性获取全部日k线数据
+	 * 
+	 * 结果显示：
+	 * 	             open    high   close     low     volume    p_change  ma5 \
+		date
+		2012-01-11   6.880   7.380   7.060   6.880   14129.96     2.62   7.060
+		2012-01-12   7.050   7.100   6.980   6.900    7895.19    -1.13   7.020
+		2012-01-13   6.950   7.000   6.700   6.690    6611.87    -4.01   6.913
+		2012-01-16   6.680   6.750   6.510   6.480    2941.63    -2.84   6.813
+		2012-01-17   6.660   6.880   6.860   6.460    8642.57     5.38   6.822
+		2012-01-18   7.000   7.300   6.890   6.880   13075.40     0.44   6.788
+		2012-01-19   6.690   6.950   6.890   6.680    6117.32     0.00   6.770
+		2012-01-20   6.870   7.080   7.010   6.870    6813.09     1.74   6.832
+		
+		             ma10    ma20      v_ma5     v_ma10     v_ma20     turnover
+		date
+		2012-01-11   7.060   7.060   14129.96   14129.96   14129.96     0.48
+		2012-01-12   7.020   7.020   11012.58   11012.58   11012.58     0.27
+		2012-01-13   6.913   6.913    9545.67    9545.67    9545.67     0.23
+		2012-01-16   6.813   6.813    7894.66    7894.66    7894.66     0.10
+		2012-01-17   6.822   6.822    8044.24    8044.24    8044.24     0.30
+		2012-01-18   6.833   6.833    7833.33    8882.77    8882.77     0.45
+		2012-01-19   6.841   6.841    7477.76    8487.71    8487.71     0.21
+		2012-01-20   6.863   6.863    7518.00    8278.38    8278.38     0.23
+		
+		设定历史数据的时间：
+		ts.get_hist_data('600848',start='2015-01-05',end='2015-01-09')
 
-	//生成symbol代码标志
-	public String _code_to_symbol(String code) {
-		if(cons.INDEX_LABELS.contains(code)) {
-			return cons.INDEX_LIST.get(code);
-		} else {
-			if(code.length() != 6) {
-				return "";
-			} else {
-				if(code.startsWith("5") || code.startsWith("6")) {
-					return "sh" + code;
-				} else {
-					return "sz" + code;
-				}
-			}
-		}
-	}
+            open    high   close     low    volume     p_change     ma5    ma10 \
+date
+2015-01-05  11.160  11.390  11.260  10.890  46383.57     1.26  11.156  11.212
+2015-01-06  11.130  11.660  11.610  11.030  59199.93     3.11  11.182  11.155
+2015-01-07  11.580  11.990  11.920  11.480  86681.38     2.67  11.366  11.251
+2015-01-08  11.700  11.920  11.670  11.640  56845.71    -2.10  11.516  11.349
+2015-01-09  11.680  11.710  11.230  11.190  44851.56    -3.77  11.538  11.363
+            ma20     v_ma5    v_ma10     v_ma20      turnover
+date
+2015-01-05  11.198  58648.75  68429.87   97141.81     1.59
+2015-01-06  11.382  54854.38  63401.05   98686.98     2.03
+2015-01-07  11.543  55049.74  61628.07  103010.58     2.97
+2015-01-08  11.647  57268.99  61376.00  105823.50     1.95
+2015-01-09  11.682  58792.43  60665.93  107924.27     1.54
+
+其他：
+ts.get_hist_data('600848'，ktype='W') #获取周k线数据
+ts.get_hist_data('600848'，ktype='M') #获取月k线数据
+ts.get_hist_data('600848'，ktype='5') #获取5分钟k线数据
+ts.get_hist_data('600848'，ktype='15') #获取15分钟k线数据
+ts.get_hist_data('600848'，ktype='30') #获取30分钟k线数据
+ts.get_hist_data('600848'，ktype='60') #获取60分钟k线数据
+ts.get_hist_data('sh'）#获取上证指数k线数据，其它参数与个股一致，下同
+ts.get_hist_data('sz'）#获取深圳成指k线数据
+ts.get_hist_data('hs300'）#获取沪深300指数k线数据
+ts.get_hist_data('sz50'）#获取上证50指数k线数据
+ts.get_hist_data('zxb'）#获取中小板指数k线数据
+ts.get_hist_data('cyb'）#获取创业板指数k线数据
+
+	 * @param code 股票代码，即6位数字代码，或者指数代码（sh=上证指数 sz=深圳成指 hs300=沪深300指数 sz50=上证50 zxb=中小板 cyb=创业板）
+	 * @param start 开始日期，格式YYYY-MM-DD
+	 * @param end 结束日期，格式YYYY-MM-DD
+	 * @param ktype 数据类型，D=日k线 W=周 M=月 5=5分钟 15=15分钟 30=30分钟 60=60分钟，默认为D
+	 * @param retry_count 当网络异常后重试次数，默认为3
+	 * 
+	 * @return date：日期
+open：开盘价
+high：最高价
+close：收盘价
+low：最低价
+volume：成交量
+price_change：价格变动
+p_change：涨跌幅
+ma5：5日均价
+ma10：10日均价
+ma20:20日均价
+v_ma5:5日均量
+v_ma10:10日均量
+v_ma20:20日均量
+turnover:换手率[注：指数无此项]
+	 */
+
+	
 	//def get_hist_data(code=None, start=None, end=None,
 //  ktype='D', retry_count=3,
 //  pause=0.001):'
@@ -203,7 +275,7 @@ if(len == 14) {
                     System.out.println("Response content length: " + entity.getContentLength());  
                     // 打印响应内容    
                     responseText = EntityUtils.toString(entity);
-//                    System.out.println((i++)+"d Response content: " + responseText); 
+                    System.out.println((i++)+"d Response content: " + responseText); 
                 }  
                 System.out.println("------------------------------------");  
                 
@@ -722,4 +794,20 @@ if(len == 14) {
 //    return str(randint(start, end))
 //
 //
+  //生成symbol代码标志
+  	public String _code_to_symbol(String code) {
+  		if(cons.INDEX_LABELS.contains(code)) {
+  			return cons.INDEX_LIST.get(code);
+  		} else {
+  			if(code.length() != 6) {
+  				return "";
+  			} else {
+  				if(code.startsWith("5") || code.startsWith("6")) {
+  					return "sh" + code;
+  				} else {
+  					return "sz" + code;
+  				}
+  			}
+  		}
+  	}
 }
