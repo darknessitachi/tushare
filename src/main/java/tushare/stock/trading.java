@@ -190,8 +190,6 @@ System.out.println(len);
 if(len == 14) {
 	cols = cons.INX_DAY_PRICE_COLUMNS;
 }
-//if len(js['record'][0]) == 14:
-//    
 //df = pd.DataFrame(js['record'], columns=cols)
 //if ktype.upper() in ['D', 'W', 'M']:
 //    df = df.applymap(lambda x: x.replace(u',', u''))
